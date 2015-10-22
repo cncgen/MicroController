@@ -30,27 +30,35 @@ unsigned char command;
 int main(void)
 { 
 	unsigned char check_write=0;
-
+	
+	DDRC &= ~(1 << DDC5); // SCL, Clear the PC5 pin, PC5 is now an input
+	PORTC |= (1 << PORTC5); // SCL, turn On the Pull-up PC5 is now an input with pull-up enabled
+	DDRC &= ~(1 << DDC4); // SDA
+	PORTC |= (1 << PORTC4); // SDA
+	
 	Uartinit();												//UART initialisieren
 	i2c_init();												//IIC initialisieren
+	
 	Clear();
 	
 	_delay_ms(30);
 	Command_mode();											//ZSC31050 in Command Mode versetzen
-		
+
 	sei();
     while(1)
     {
 
-		command = received_command[0] & 0xF0;
+		command =received_command[0] & 0xF0;
 		switch(command)										 
 		{
 					//bei Kommando READ_EEPROM_RAM Lesefunktion aufrufen
 					case READ_EEPROM_RAM:	
-											//RAM oder EEPROM auslesen								
-											Read_ZSC31050(received_command);	
+											//RAM oder EEPROM auslesen																			
+											Read_ZSC31050(received_command);
+											UDR0=0x10;											
 											Clear();
 											break;
+										
 					
 					//bei Kommando WRITE_EEPROM_RAM Schreibfunktion aufrufen						
 					case WRITE_EEPROM_RAM:	
@@ -75,7 +83,9 @@ int main(void)
 											received_data_count = 0;
 											Output(received_command);			
 											Clear();
+											UDR0=0x10;
 											break;
+
 
 		}
 		
