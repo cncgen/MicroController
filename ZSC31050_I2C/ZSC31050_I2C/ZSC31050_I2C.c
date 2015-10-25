@@ -54,8 +54,7 @@ int main(void)
 					//bei Kommando READ_EEPROM_RAM Lesefunktion aufrufen
 					case READ_EEPROM_RAM:	
 											//RAM oder EEPROM auslesen																			
-											Read_ZSC31050(received_command);
-											UDR0=0x10;											
+											Read_ZSC31050(received_command);																						
 											Clear();
 											break;
 										
