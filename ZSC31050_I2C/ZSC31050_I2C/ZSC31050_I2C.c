@@ -49,14 +49,14 @@ int main(void)
     {
 		command=0;
 
-		command =received_command[0] & 0xF0;		
+		command =received_command[0] & 0xF0;
 		switch(command)										 
 		{
 					//bei Kommando READ_EEPROM_RAM Lesefunktion aufrufen
 					case READ_EEPROM_RAM:	
 											//RAM oder EEPROM auslesen																										
-											Read_ZSC31050(received_command);																						
-											Clear();											
+											Read_ZSC31050(received_command);
+											Clear();
 											break;
 										
 					
@@ -73,7 +73,7 @@ int main(void)
 					//bei Kommando COPY Kopierfunktion aufrufen								
 					case COPY:	
 											// EEPROM in RAM oder RAM in EEPROM kopieren																							
-											//Copy(received_command);				
+											Copy(received_command);				
 											Clear();
 											break;	
 					
@@ -81,7 +81,7 @@ int main(void)
 					case READ_OUTPUT:	
 											//Messwerte auslesen											
 											received_data_count = 0;
-											//Output(received_command);			
+											Output(received_command);			
 											Clear();											
 											break;
 					
