@@ -47,15 +47,16 @@ int main(void)
 	sei();
     while(1)
     {
+		command=0;
 
-		command =received_command[0] & 0xF0;
+		command =received_command[0] & 0xF0;		
 		switch(command)										 
 		{
 					//bei Kommando READ_EEPROM_RAM Lesefunktion aufrufen
 					case READ_EEPROM_RAM:	
-											//RAM oder EEPROM auslesen																			
+											//RAM oder EEPROM auslesen																										
 											Read_ZSC31050(received_command);																						
-											Clear();
+											Clear();											
 											break;
 										
 					
@@ -72,7 +73,7 @@ int main(void)
 					//bei Kommando COPY Kopierfunktion aufrufen								
 					case COPY:	
 											// EEPROM in RAM oder RAM in EEPROM kopieren																							
-											Copy(received_command);				
+											//Copy(received_command);				
 											Clear();
 											break;	
 					
@@ -80,28 +81,25 @@ int main(void)
 					case READ_OUTPUT:	
 											//Messwerte auslesen											
 											received_data_count = 0;
-											Output(received_command);			
-											Clear();
-											UDR0=0x10;
+											//Output(received_command);			
+											Clear();											
 											break;
-
-
-		}
-		
+					
+		}	
     }
 }
 
 ISR(USART_RX_vect)
 {
-
  	received_command[received_data_count] = UDR0;	
  	received_data_count++;
-	 
+	if (received_command[received_data_count-1]==0xFE)
+	Clear();
 }
 
 void Clear(void){
 	
-	for (unsigned char i = 0;i<=40;i++)
+	for (unsigned char i = 0;i<41;i++)
 	{
 		received_command[i] = 0;
 	}
