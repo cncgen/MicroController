@@ -49,7 +49,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 	switch (command[0]){
 			//liest den "kompletten" EEPROM aus und sendet über UART
 			case EEP_READ_ALL_COMMAND:								
-										for(unsigned char i = 0;i<=7;i++)
+										for(unsigned char i = 0;i<=15;i++)
 										{
 											i2c_start(ZSC31050_ADDRESS + I2C_WRITE);
 											i2c_write(ZSC31050_EEP_READ_MESS_COMMAND + i);
@@ -64,7 +64,8 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
 										}
-										
+									/*	
+									
 										for(unsigned char i = 0;i<=1;i++)
 										{
 											i2c_start(ZSC31050_ADDRESS + I2C_WRITE);
@@ -109,7 +110,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
 										}
-										
+										*/
 										break;
 			
 			//liest den "kompletten" RAM aus und sendet über UART							
@@ -350,6 +351,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 										
 										break;
 										
+			
 		
 	}	
 }
@@ -634,7 +636,7 @@ unsigned char Write_ZSC31050 (volatile unsigned char command[],volatile unsigned
 		//beschreibt vom Benutzer frei verfügbaren EEPROM								
 		case EEP_WRITE_ID_COMMAND:								
 									if (count == 5)
-									{
+									{PORTB &= ~(1<<DDB5); // led Pin 13 auf High setzen
 										for(unsigned char i = 0;i<=1;i++)
 										{
 											i2c_start(ZSC31050_ADDRESS + I2C_WRITE);
@@ -644,6 +646,7 @@ unsigned char Write_ZSC31050 (volatile unsigned char command[],volatile unsigned
 											i2c_stop();
 											_delay_ms(50);
 										}
+										PORTB |=(1<<DDB5); // led Pin 13 auf High setzen
 
 										//Signature_write(0);
 										
@@ -693,22 +696,21 @@ void Output(volatile unsigned char command[]){
 									i2c_start(ZSC31050_ADDRESS + I2C_WRITE);
 									i2c_write(ZSC31050_START_P);
 									i2c_stop();
-									_delay_us(50);
+									_delay_us(50);						
 						
 									do 
 									{
 											_delay_ms(250);
 											i2c_start(ZSC31050_ADDRESS + I2C_READ);
 											received_byte = i2c_readAck();
-											received_byte2 = i2c_readNak();
-											i2c_stop();
+											received_byte2 = i2c_readNak();	
+											i2c_stop();										
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
-											UDR0 = received_byte2;
+												UDR0 = received_byte2;
 											while(!(UCSR0A & (1<<UDRE0)));
-			
-									} while (command[0] != 0xFF);
-									
+												UDR0=0x0A;		
+									} while (command[0] != 0xFF);									
 									break;
 									
 					//liest den unkorrigierten ungenullten digitalen Temperaturwert aus

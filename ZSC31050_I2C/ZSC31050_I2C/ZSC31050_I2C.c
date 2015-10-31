@@ -31,6 +31,9 @@ int main(void)
 { 
 	unsigned char check_write=0;
 	
+	DDRB |= (1<<DDB5); // led Pin 13 einschalten Arduino
+	PORTB |=(1<<DDB5); // led Pin 13 auf High setzen
+	
 	DDRC &= ~(1 << DDC5); // SCL, Clear the PC5 pin, PC5 is now an input
 	PORTC |= (1 << PORTC5); // SCL, turn On the Pull-up PC5 is now an input with pull-up enabled
 	DDRC &= ~(1 << DDC4); // SDA

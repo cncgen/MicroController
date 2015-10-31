@@ -18,7 +18,7 @@
 #endif
 
 /* I2C clock in Hz */
-#define SCL_CLOCK  10000L
+#define SCL_CLOCK  100000L
 
 
 /*************************************************************************
@@ -28,9 +28,9 @@ void i2c_init(void)
 {
   /* initialize TWI clock: 100 kHz clock, TWPS = 0 => prescaler = 1 */
   
- TWSR = (1<<TWPS1) | (1<<TWPS0) ;                         /* no prescaler */
- // TWBR = ((F_CPU/SCL_CLOCK)-16)/2;  /* must be > 10 for stable operation */
- TWBR = 11;
+ TWSR =0x00; //(1<<TWPS1) | (1<<TWPS0) ;                         /* no prescaler */
+ //TWBR = ((F_CPU/SCL_CLOCK)-16)/2;  /* must be > 10 for stable operation */
+ TWBR = 72;
 }/* i2c_init */
 
 
