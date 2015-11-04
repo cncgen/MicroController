@@ -49,7 +49,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 	switch (command[0]){
 			//liest den "kompletten" EEPROM aus und sendet über UART
 			case EEP_READ_ALL_COMMAND:								
-										for(unsigned char i = 0;i<=15;i++)
+										for(unsigned char i = 0;i<=7;i++)
 										{
 											i2c_start(ZSC31050_ADDRESS + I2C_WRITE);
 											i2c_write(ZSC31050_EEP_READ_MESS_COMMAND + i);
@@ -58,13 +58,13 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											i2c_start(ZSC31050_ADDRESS + I2C_READ);
 											received_byte = i2c_readAck();
 											received_byte2 = i2c_readNak();
-											i2c_stop();
-											while(!(UCSR0A & (1<<UDRE0)));
+											i2c_stop();										
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
-									/*	
+									
 									
 										for(unsigned char i = 0;i<=1;i++)
 										{
@@ -79,6 +79,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										for(unsigned char i = 0;i<=2;i++)
@@ -94,6 +95,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										for(unsigned char i = 0;i<=6;i++)
@@ -109,8 +111,9 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
-										*/
+										
 										break;
 			
 			//liest den "kompletten" RAM aus und sendet über UART							
@@ -124,11 +127,11 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											i2c_start(ZSC31050_ADDRESS + I2C_READ);
 											received_byte = i2c_readAck();
 											received_byte2 = i2c_readNak();
-											i2c_stop();
-											while(!(UCSR0A & (1<<UDRE0)));
+											i2c_stop();											
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										for(unsigned char i = 0;i<=1;i++)
@@ -144,6 +147,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										for(unsigned char i = 0;i<=2;i++)
@@ -159,6 +163,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										for(unsigned char i = 0;i<=6;i++)
@@ -174,6 +179,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -233,6 +239,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -252,6 +259,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -271,6 +279,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -290,6 +299,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -309,6 +319,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -328,6 +339,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -347,6 +359,7 @@ void Read_ZSC31050 (volatile unsigned char command[]){
 											UDR0 = received_byte;
 											while(!(UCSR0A & (1<<UDRE0)));
 											UDR0 = received_byte2;
+											while(!(UCSR0A & (1<<UDRE0)));
 										}
 										
 										break;
@@ -709,7 +722,7 @@ void Output(volatile unsigned char command[]){
 											while(!(UCSR0A & (1<<UDRE0)));
 												UDR0 = received_byte2;
 											while(!(UCSR0A & (1<<UDRE0)));
-												UDR0=0x0A;		
+												
 									} while (command[0] != 0xFF);									
 									break;
 									
